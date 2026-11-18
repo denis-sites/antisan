@@ -418,6 +418,56 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .hx-in>*{animation:up .9s var(--ease) both}
 .hx-in>:nth-child(2){animation-delay:.08s}.hx-in>:nth-child(3){animation-delay:.16s}.hx-in>:nth-child(4){animation-delay:.24s}.hx-in>:nth-child(5){animation-delay:.32s}.hx-in>:nth-child(6){animation-delay:.4s}
 .hx-car{animation:carin 1.8s var(--ease) both}
+
+/* ===== Весь прайс: карточки, вкладки и переключатель плёнки ===== */
+.plist{margin-top:90px}
+.pl-head{text-align:center;max-width:760px;margin:0 auto 40px}
+.pl-head h3{font:900 clamp(34px,4.6vw,60px)/1.05 var(--d);text-transform:uppercase;letter-spacing:-.01em}
+.pl-head h3 em{font-style:normal;color:#6c6c68}
+.pl-head p{color:var(--dim);font-size:17px;margin:16px auto 0;max-width:560px}
+.pl-ctrl{display:flex;flex-wrap:wrap;gap:18px 28px;justify-content:center;align-items:center;margin-top:30px}
+.seg2{position:relative;display:inline-flex;padding:4px;border:1px solid var(--line);border-radius:999px;background:#0d0d0e}
+.seg2 i{position:absolute;top:4px;bottom:4px;left:4px;width:0;border-radius:999px;background:var(--acc);transition:transform .5s var(--ease),width .5s var(--ease)}
+.seg2 button{position:relative;z-index:1;border:0;background:none;color:#cfcfcb;font:600 14.5px var(--b);padding:11px 20px;border-radius:999px;cursor:pointer;transition:color .35s}
+.seg2 button.on{color:var(--accInk)}
+.sw{display:flex;align-items:center;gap:12px;font:600 15px var(--b);color:#77776f;transition:opacity .35s}
+.sw.off{opacity:.25;pointer-events:none}
+.sw span{cursor:pointer;transition:color .3s}.sw span.on{color:var(--ink)}
+.sw button{position:relative;width:54px;height:30px;border-radius:999px;border:1px solid var(--line);background:#222224;cursor:pointer;padding:0}
+.sw button i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#f4f4f2;transition:transform .45s var(--ease)}
+.sw.l button i{transform:translateX(24px)}
+.sw em{font:700 11px var(--b);letter-spacing:.12em;text-transform:uppercase;font-style:normal;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:#cfcfcb}
+.pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;transition:opacity .2s,transform .2s}
+.pcards.out{opacity:0;transform:translate3d(0,8px,0)}
+.pc{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);background:#0c0c0d;border-radius:22px;padding:28px 24px 24px;animation:pcin .75s var(--ease) both;animation-delay:calc(var(--i) * .07s)}
+.pc.hit{border-color:rgba(255,255,255,.28);background:linear-gradient(180deg,#151517,#0c0c0d 60%)}
+.pc.hit:before{content:"";position:absolute;left:18px;right:18px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent)}
+/* карточки прайса стоят на паузе, пока до них не долистали */
+.js .pcards:not(.seen) .pc{animation-play-state:paused}
+@keyframes pcin{from{opacity:0;transform:translate3d(0,24px,0) scale(.985)}}
+.pc-top{display:flex;justify-content:space-between;align-items:start;gap:10px;min-height:46px}
+.pc-top b{font:700 19px/1.25 var(--b)}
+.pc-badge{flex-shrink:0;font:700 10.5px/1.25 var(--b);letter-spacing:.12em;text-transform:uppercase;background:var(--acc);color:var(--accInk);border-radius:999px;padding:6px 10px}
+.pc p{color:var(--dim);font-size:15px;line-height:1.5;margin-top:10px;flex:1}
+.pc-price{display:flex;align-items:baseline;gap:8px;margin:26px 0 22px;white-space:nowrap}
+.pc-price strong{display:inline-block;font:900 40px/1 var(--d);letter-spacing:-.03em}
+.pc-price small{color:var(--dim);font:500 15px var(--b)}
+.pc .btn{width:100%;padding:14px 18px}
+.tick{animation:tick .45s var(--ease)}
+@keyframes tick{from{opacity:0;transform:translate3d(0,-12px,0)}}
+.pl-hint{text-align:center;color:var(--dim);font-size:15px;margin-top:28px}
+.pl-hint a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1080px){.pcards{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){
+  .plist{margin-top:64px}
+  .pl-head{margin-bottom:26px}.pl-head p{font-size:15px}
+  .pl-ctrl{flex-direction:column;gap:16px}
+  .seg2 button{padding:10px 16px;font-size:14px}
+  .pcards{grid-template-columns:1fr;gap:10px}
+  .pc{padding:22px 20px 20px}
+  .pc-top{min-height:0}
+  .pc-price{margin:18px 0 16px}.pc-price strong{font-size:34px}
+}
 </style>
 </head>
 <body>
@@ -520,11 +570,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
         <p class="note">Цена для вашего типа кузова. Точную сумму назовём по модели до начала работ, без доплат по ходу.</p>
       </div>
     </div>
-    <div class="plist">
-      <h3>Весь прайс</h3>
-      <div class="ptabs" id="ptabs"></div>
-      <div class="price" id="plist"></div>
-      <div class="pmore"><button id="pall"></button><span class="hint">Не знаете, что выбрать? <a data-wa-photo href="https://wa.me/79031930303" target="_blank" rel="noopener">Пришлите фото машины</a>, подскажем.</span></div>
+    <div class="plist" id="prices">
+      <div class="pl-head" data-rv>
+        <h3>Весь <em>прайс</em></h3>
+        <p>Цены для седана. Для кроссовера и внедорожника выберите кузов в калькуляторе выше.</p>
+        <div class="pl-ctrl">
+          <div class="seg2" id="ptabs" role="tablist"><i aria-hidden="true"></i></div>
+          <div class="sw" id="sw"><span data-f="0" class="on">Armolan</span><button type="button" role="switch" aria-checked="false" aria-label="Плёнка LLumar"><i></i></button><span data-f="1">LLumar</span><em>премиум</em></div>
+        </div>
+      </div>
+      <div class="pcards" id="plist"></div>
+      <p class="pl-hint">Не знаете, что выбрать? <a data-wa-photo href="https://wa.me/79031930303" target="_blank" rel="noopener">Пришлите фото машины</a>, подскажем.</p>
     </div>
   </div>
 </section>
@@ -738,7 +794,7 @@ const pkSum=p=>p[2].reduce((a,n)=>a+price(n),0);
 PK.forEach((p,i)=>{const b=document.createElement('button');b.type='button';b.className=i===pk?'on':'';b.onclick=()=>{pk=i;[...pkBox.children].forEach((x,j)=>x.classList.toggle('on',j===i));calc()};pkBox.appendChild(b)});
 EX.forEach(n=>{const b=document.createElement('button');b.type='button';b.textContent=n.replace(' на зоны риска','')+' +';b.onclick=()=>{ex.has(n)?ex.delete(n):ex.add(n);b.classList.toggle('on',ex.has(n));calc()};xt.appendChild(b)});
 const seg=(id,cb)=>document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b)}));
-seg('film',b=>{f=+b.dataset.f;calc()});seg('body',b=>{k=+b.dataset.k;calc()});
+seg('film',b=>{f=+b.dataset.f;calc();syncFilm()});seg('body',b=>{k=+b.dataset.k;calc()});
 car.addEventListener('input',()=>calc(true));
 function calc(quiet){
   [...pkBox.children].forEach((b,i)=>{const p=PK[i];b.innerHTML=(p[3]?`<i>${p[3]}</i>`:'')+`<b>${p[0]}</b><small>${p[1]}</small><span>${fmt(pkSum(p))} ₽</span>`});
@@ -753,14 +809,27 @@ function anim(to){
   requestAnimationFrame(step);
 }
 shown=pkSum(PK[pk]);tot.textContent=fmt(shown)+' ₽';calc();
-/* Прайс: вкладки по группам, в каждой видно 4 строки, остальное по кнопке */
-const GR=[...new Set(SVC.map(s=>s[3]))],pl=document.getElementById('plist'),pt=document.getElementById('ptabs'),pall=document.getElementById('pall');
-function showGr(g){[...pt.children].forEach(b=>b.classList.toggle('on',b.textContent===g));pl.classList.remove('all');
-  const rows=SVC.filter(s=>s[3]===g);pl.innerHTML=rows.map((s,i)=>`<div class="row${i>3?' hid':''}"><div><b>${s[0]}</b>${s[4]?`<p>${s[4]}</p>`:''}</div><div class="v">${s[1]?'от '+fmt(s[1])+' ₽<small>LLumar от '+fmt(s[2])+' ₽</small>':'<small>цену назовём</small>по фото'}</div></div>`).join('');
-  pall.style.display=rows.length>4?'':'none';pall.textContent='Ещё '+(rows.length-4)+' ↓'}
-GR.forEach(g=>{const b=document.createElement('button');b.type='button';b.textContent=g;b.onclick=()=>showGr(g);pt.appendChild(b)});
-pall.onclick=()=>{pl.classList.add('all');pall.style.display='none'};
-showGr(GR[0]);
+/* Прайс карточками: вкладки «Тонировка / Защита плёнкой» + переключатель плёнки (общий с калькулятором) */
+const GR=[...new Set(SVC.map(s=>s[3]))],pl=document.getElementById('plist'),pt=document.getElementById('ptabs'),pind=pt.querySelector('i'),sw=document.getElementById('sw'),swb=sw.querySelector('button');
+const HIT='Задняя полусфера',PHOTO=WA+encodeURIComponent('Здравствуйте! Я с сайта. Пришлю фото машины, подскажите цену. Услуга: ');
+let gr=GR[0];
+function moveInd(){const b=pt.querySelector('button.on');if(b){pind.style.width=b.offsetWidth+'px';pind.style.transform=`translateX(${b.offsetLeft-4}px)`}}
+function card(s,i){const hit=s[0]===HIT,p=s[1];
+  return `<div class="pc${hit?' hit':''}" style="--i:${i}"><div class="pc-top"><b>${s[0]}</b>${hit?'<span class="pc-badge">Популярное</span>':''}</div><p>${s[4]}</p>`+
+  (p?`<div class="pc-price"><small>от</small><strong data-n="${s[0]}">${fmt(s[f+1])} ₽</strong></div><a class="btn ${hit?'acc':'gh'}" href="#calc">Рассчитать →</a>`
+    :`<div class="pc-price"><strong>По фото</strong><small>назовём цену</small></div><a class="btn gh" href="${PHOTO+encodeURIComponent(s[0])}" target="_blank" rel="noopener">Прислать фото</a>`)+'</div>'}
+function showGr(g,anim){gr=g;[...pt.querySelectorAll('button')].forEach(b=>{const on=b.textContent===g;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});moveInd();
+  const rows=SVC.filter(s=>s[3]===g);sw.classList.toggle('off',!rows.some(s=>s[1]));
+  const draw=()=>{pl.innerHTML=rows.map(card).join('');pl.classList.remove('out')};
+  if(anim){pl.classList.add('out');setTimeout(draw,200)}else draw()}
+GR.forEach(g=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.textContent=g;b.onclick=()=>{if(g!==gr)showGr(g,true)};pt.appendChild(b)});
+/* смена плёнки: меняются только цифры, с лёгким «перелистыванием» */
+function syncFilm(){swb.setAttribute('aria-checked',f===1);sw.classList.toggle('l',f===1);sw.querySelectorAll('span').forEach(s=>s.classList.toggle('on',+s.dataset.f===f));
+  pl.querySelectorAll('strong[data-n]').forEach(el=>{el.textContent=fmt(S(el.dataset.n)[f+1])+' ₽';el.classList.remove('tick');void el.offsetWidth;el.classList.add('tick')})}
+const setFilm=x=>document.querySelector(`#film button[data-f="${x}"]`).click();
+swb.onclick=()=>setFilm(f?0:1);sw.querySelectorAll('span').forEach(s=>s.onclick=()=>setFilm(+s.dataset.f));
+showGr(GR[0]);addEventListener('resize',moveInd);
+new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){pl.classList.add('seen');o.disconnect()}}),{rootMargin:'0px 0px -12% 0px'}).observe(pl);document.fonts&&document.fonts.ready.then(moveInd);
 document.querySelectorAll('[data-wa-photo]').forEach(a=>a.href=WA+encodeURIComponent('Здравствуйте! Я с сайта. Пришлю фото машины, подскажите, какую тонировку выбрать и сколько будет стоить. Моя машина: '));
 document.querySelectorAll('[data-p]').forEach(el=>{const s=S(el.dataset.p);el.textContent=s&&s[1]?'от '+fmt(s[1])+' ₽':'цену назовём'});
 
