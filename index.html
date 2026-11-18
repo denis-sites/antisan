@@ -437,7 +437,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .sw button i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#f4f4f2;transition:transform .45s var(--ease)}
 .sw.l button i{transform:translateX(24px)}
 .sw em{font:700 11px var(--b);letter-spacing:.12em;text-transform:uppercase;font-style:normal;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:#cfcfcb}
-.pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;transition:opacity .2s,transform .2s}
+.pcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;transition:opacity .2s,transform .2s}
 .pcards.out{opacity:0;transform:translate3d(0,8px,0)}
 .pc{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);background:#0c0c0d;border-radius:22px;padding:28px 24px 24px;animation:pcin .75s var(--ease) both;animation-delay:calc(var(--i) * .07s)}
 .pc.hit{border-color:rgba(255,255,255,.28);background:linear-gradient(180deg,#151517,#0c0c0d 60%)}
@@ -449,7 +449,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .pc-top b{font:700 19px/1.25 var(--b)}
 .pc-badge{flex-shrink:0;font:700 10.5px/1.25 var(--b);letter-spacing:.12em;text-transform:uppercase;background:var(--acc);color:var(--accInk);border-radius:999px;padding:6px 10px}
 .pc p{color:var(--dim);font-size:15px;line-height:1.5;margin-top:10px;flex:1}
-.pc-price{display:flex;align-items:baseline;gap:8px;margin:26px 0 22px;white-space:nowrap}
+.pc-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:26px 0 22px;white-space:nowrap}
 .pc-price strong{display:inline-block;font:900 40px/1 var(--d);letter-spacing:-.03em}
 .pc-price small{color:var(--dim);font:500 15px var(--b)}
 .pc .btn{width:100%;padding:14px 18px}
@@ -457,7 +457,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 @keyframes tick{from{opacity:0;transform:translate3d(0,-12px,0)}}
 .pl-hint{text-align:center;color:var(--dim);font-size:15px;margin-top:28px}
 .pl-hint a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
-@media (max-width:1080px){.pcards{grid-template-columns:1fr 1fr}}
+@media (max-width:1080px){.pcards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){
   .plist{margin-top:64px}
   .pl-head{margin-bottom:26px}.pl-head p{font-size:15px}
