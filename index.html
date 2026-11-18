@@ -689,7 +689,7 @@ body{background:var(--bg)}
         </div>
       </div>
       <div class="pcards" id="plist"></div>
-      <p class="pl-hint">Не знаете, что выбрать? <a data-wa-photo href="https://wa.me/79031930303" target="_blank" rel="noopener">Пришлите фото машины</a>, подскажем.</p>
+      <p class="pl-hint">Не знаете, что выбрать? <a href="#book" data-book data-msg="Здравствуйте! Я с сайта. Пришлю фото машины, подскажите, какую тонировку выбрать и сколько будет стоить. Моя машина: " data-sub="Пришлите фото машины в чат, подскажем плёнку и цену. Ежедневно 11:00–21:00.">Пришлите фото машины</a>, подскажем.</p>
     </div>
   </div>
 </section>
@@ -818,7 +818,7 @@ body{background:var(--bg)}
         <div class="row"><small>Режим</small><span>Ежедневно, 11:00–21:00</span></div>
         <div class="hint">🚿 Перед приездом помойте машину насухо — так плёнка ляжет идеально.</div>
         <div class="btns">
-          <a class="btn acc" href="https://wa.me/79031930303?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%AF%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%2C%20%D1%85%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D1%82%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D1%83" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn acc" href="#book" data-book>Написать</a>
           <a class="btn gh" href="tel:+79031930303">Позвонить</a>
         </div>
       </div>
@@ -947,13 +947,13 @@ function anim(to){
 shown=pkSum(PK[pk]);tot.textContent=fmt(shown)+' ₽';calc();
 /* Прайс карточками: вкладки «Тонировка / Защита плёнкой» + переключатель плёнки (общий с калькулятором) */
 const GR=[...new Set(SVC.map(s=>s[3]))],pl=document.getElementById('plist'),pt=document.getElementById('ptabs'),pind=pt.querySelector('i'),sw=document.getElementById('sw'),swb=sw.querySelector('button');
-const HIT='Задняя полусфера',PHOTO=WA+encodeURIComponent('Здравствуйте! Я с сайта. Пришлю фото машины, подскажите цену. Услуга: ');
+const HIT='Задняя полусфера',PHOTO='Здравствуйте! Я с сайта. Пришлю фото машины, подскажите цену. Услуга: ';
 let gr=GR[0];
 function moveInd(){const b=pt.querySelector('button.on');if(b){pind.style.width=b.offsetWidth+'px';pind.style.transform=`translateX(${b.offsetLeft-4}px)`}}
 function card(s,i){const hit=s[0]===HIT,p=s[1];
   return `<div class="pc${hit?' hit':''}" style="--i:${i}"><div class="pc-top"><b>${s[0]}</b>${hit?'<span class="pc-badge">Популярное</span>':''}</div><p>${s[4]}</p>`+
   (p?`<div class="pc-price"><small>от</small><strong data-n="${s[0]}">${fmt(s[f+1])} ₽</strong></div><a class="btn ${hit?'acc':'gh'}" href="#calc">Рассчитать →</a>`
-    :`<div class="pc-price"><strong>По фото</strong><small>назовём цену</small></div><a class="btn gh" href="${PHOTO+encodeURIComponent(s[0])}" target="_blank" rel="noopener">Прислать фото</a>`)+'</div>'}
+    :`<div class="pc-price"><strong>По фото</strong><small>назовём цену</small></div><a class="btn gh" href="#book" data-book data-msg="${PHOTO+s[0].toLowerCase()}. Моя машина: " data-sub="Пришлите фото машины в чат, подскажем плёнку и цену. Ежедневно 11:00–21:00.">Прислать фото</a>`)+'</div>'}
 function showGr(g,anim){gr=g;[...pt.querySelectorAll('button')].forEach(b=>{const on=b.textContent===g;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});moveInd();
   const rows=SVC.filter(s=>s[3]===g);sw.classList.toggle('off',!rows.some(s=>s[1]));
   const draw=()=>{pl.innerHTML=rows.map(card).join('');pl.classList.remove('out')};
@@ -966,7 +966,6 @@ const setFilm=x=>document.querySelector(`#film button[data-f="${x}"]`).click();
 swb.onclick=()=>setFilm(f?0:1);sw.querySelectorAll('span').forEach(s=>s.onclick=()=>setFilm(+s.dataset.f));
 showGr(GR[0]);addEventListener('resize',moveInd);
 new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){pl.classList.add('seen');o.disconnect()}}),{rootMargin:'0px 0px -12% 0px'}).observe(pl);document.fonts&&document.fonts.ready.then(moveInd);
-document.querySelectorAll('[data-wa-photo]').forEach(a=>a.href=WA+encodeURIComponent('Здравствуйте! Я с сайта. Пришлю фото машины, подскажите, какую тонировку выбрать и сколько будет стоить. Моя машина: '));
 document.querySelectorAll('[data-p]').forEach(el=>{const s=S(el.dataset.p);el.textContent=s&&s[1]?'от '+fmt(s[1])+' ₽':'цену назовём'});
 
 
@@ -975,19 +974,19 @@ document.querySelectorAll('[data-p]').forEach(el=>{const s=S(el.dataset.p);el.te
 const BOOK={wa:'79031930303',tg:'+79267617748',vk:''};
 const bk=document.getElementById('bk'),bkN=document.getElementById('bkN'),bkS=document.getElementById('bkS'),DEF='Здравствуйте! Я с сайта, хочу записаться на тонировку. Моя машина: ';
 let bkFrom=null,bkMsg=DEF;
-function openBk(msg,from){bkMsg=msg||DEF;bkFrom=from;bkN.textContent='';
-  bkS.textContent=msg&&msg!==DEF?'Расчёт уже в сообщении, останется отправить. Ежедневно 11:00–21:00.':'Подскажем плёнку, цену и время. Ежедневно 11:00–21:00.';
+function openBk(msg,from,sub){bkMsg=msg||DEF;bkFrom=from;bkN.textContent='';
+  bkS.textContent=sub?sub:msg&&msg!==DEF?'Расчёт уже в сообщении, останется отправить. Ежедневно 11:00–21:00.':'Подскажем плёнку, цену и время. Ежедневно 11:00–21:00.';
   bk.querySelector('[data-ch=wa]').href='https://wa.me/'+BOOK.wa+'?text='+encodeURIComponent(bkMsg);
   bk.querySelector('[data-ch=tg]').href='https://t.me/'+BOOK.tg;
   const vk=bk.querySelector('[data-ch=vk]');vk.hidden=!BOOK.vk;if(BOOK.vk)vk.href=BOOK.vk;
   bk.setAttribute('aria-hidden','false');document.documentElement.classList.add('lock');requestAnimationFrame(()=>bk.classList.add('on'));
   setTimeout(()=>bk.querySelector('.bk-o:not([hidden])').focus({preventScroll:true}),350)}
 function closeBk(){bk.classList.remove('on');bk.setAttribute('aria-hidden','true');document.documentElement.classList.remove('lock');bkFrom&&bkFrom.focus({preventScroll:true})}
-document.querySelectorAll('[data-book]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openBk(a.hasAttribute('data-calc')?calcMsg:DEF,a)}));
+document.addEventListener('click',e=>{const a=e.target.closest('[data-book]');if(!a)return;e.preventDefault();openBk(a.hasAttribute('data-calc')?calcMsg:(a.dataset.msg||DEF),a,a.dataset.sub)});
 bk.querySelectorAll('[data-close]').forEach(x=>x.onclick=closeBk);
 addEventListener('keydown',e=>{if(e.key==='Escape'&&bk.classList.contains('on'))closeBk()});
 /* В Telegram нельзя передать текст по ссылке: копируем его, чтобы клиент просто вставил */
-bk.querySelector('[data-ch=tg]').addEventListener('click',()=>{if(bkMsg!==DEF&&navigator.clipboard){navigator.clipboard.writeText(bkMsg).then(()=>bkN.textContent='Текст расчёта скопирован, вставьте его в чат',()=>{})}});
+bk.querySelector('[data-ch=tg]').addEventListener('click',()=>{if(bkMsg!==DEF&&navigator.clipboard){navigator.clipboard.writeText(bkMsg).then(()=>bkN.textContent='Текст скопирован, вставьте его в чат',()=>{})}});
 
 
 /* Фон-шейдер: включается, когда первый экран почти ушёл, выключается при возврате */
@@ -1028,7 +1027,7 @@ document.getElementById('mapClose').onclick=()=>{map.querySelector('iframe')?.re
 const tabs=document.getElementById('ttabs'),wf=document.getElementById('wf');
 T.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML=t[0]+'<small>'+(t[4]?'задние':'ГОСТ')+'</small>';b.onclick=()=>sel(i);tabs.appendChild(b)});
 /* «Не знаю» — открывает WhatsApp в новой вкладке, сайт остаётся открытым */
-const q=document.createElement('a');q.className='ask';q.target='_blank';q.rel='noopener';q.href='https://wa.me/79031930303?text='+encodeURIComponent('Здравствуйте! Я с сайта. Помогите выбрать тонировку, моя машина: ');q.innerHTML='?<small>не знаю</small>';tabs.appendChild(q);
+const q=document.createElement('a');q.className='ask';q.href='#book';q.setAttribute('data-book','');q.dataset.msg='Здравствуйте! Я с сайта. Помогите выбрать тонировку, моя машина: ';q.dataset.sub='Напишите марку машины, подскажем процент и плёнку. Ежедневно 11:00–21:00.';q.innerHTML='?<small>не знаю</small>';tabs.appendChild(q);
 function sel(i){const t=T[i];[...tabs.querySelectorAll('button')].forEach((b,j)=>b.classList.toggle('on',i===j));
  wf.setAttribute('fill',t[4]?'#0a0b0d':'#3f7fb0');wf.setAttribute('fill-opacity',t[1]);wf.style.fill='';
  document.getElementById('lf').textContent='Переднее стекло: '+(t[4]?t[0]:'атермалка');
